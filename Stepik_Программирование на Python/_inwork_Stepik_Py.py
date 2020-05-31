@@ -503,12 +503,49 @@ for i in range(n):
 """
 # ?Когда Павел учился в школе, он запоминал таблицу умножения прямоугольными блоками. Для тренировок ему бы очень пригодилась программа, которая показывала бы блок таблицы умножения.
 # ->https://stepik.org/lesson/3366/step/3?unit=949
-a, b, c, d = input()
-#n = int(input())
-for i in range(n):
-    for j in range(n):
-        print('*', end='')
+"""
+#a, b, c, d = input() # <-здесь Ошибка
+#a,b,c,d = (int(n) for n in input()) # <-здесь Ошибка
+
+a, b, c, d = int(input()), int(input()), int(input()), int(input())
+for i in range(c, d+1):
+    print('\t',i, end='')
+print ()
+for j in range (a, b+1):
+    print (j, end='')
+    for f in range (c, d+1):
+        print('\t', j*f, end='')
     print()
+"""
+# *Вариант 2:
+"""
+# *?Как вставить '\t' перед циклом range?
+# ->Ivan Trechyokas - Самый простой путь - сделать так:
+print('\t', *range(c, d+1), sep='\t') # * - unpacking arguments list - https://docs.python.org/2/tutorial/controlflow.html#unpacking-argument-lists - _onenote:_документация Python_4.7.4. Unpacking Argument Lists
+## --> чуть длиннее:
+print('\t', end = '')
+for i in range(c, d+1):
+    print('\t', i, sep='', end='')
+"""
+# *Вариант 3 - Roman M - как-то так..):
+"""
+a, b, c, d = (int(input()) for x in range(4))
+print('', *range(c,d+1), sep='\t')
+for x in range(a, b+1):
+    print(x, *[y*x for y in range(c, d+1)], sep='\t')
+"""
+# ->Ivan Trechyokas - Таблица умножение строится на сложении числа некоторого числа N раз, где N - номер столбца. /так правильнее:
+"""
+a=int(input())
+b=int(input())
+c=int(input())
+d=int(input())
+
+#print('\t', *range(c, d+1), sep='\t') #<-здесь Ошибка - '\t' = \t - лишняя
+print('', *range(c, d+1), sep='\t') # * - unpacking arguments list - https://docs.python.org/2/tutorial/controlflow.html#unpacking-argument-lists - _onenote:_документация Python_4.7.4. Unpacking Argument Lists
+for i in range(a,b+1):
+    print(i, *range(i*c,(i*d)+1, i), sep='\t')
+"""
 
 ##2.4 Строки и символы
 

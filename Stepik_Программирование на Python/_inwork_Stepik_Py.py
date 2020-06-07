@@ -735,13 +735,52 @@ else:
     # [print( src[(i+1) % len(src)]) for i in range(len(src))]
 """
 # ? Напишите программу, которая принимает на вход список чисел в одной строке и выводит на экран в одну строку значения, которые повторяются в нём более одного раза.
-#L = [int(i) for i in input().split()]
-L = input()
-for i in L:
-    if L.count(i) > 1:
-        print(i, end='')
-
+# - Мой вариант - без создания второго списка:
+"""
+L = [int(i) for i in input().split()]
+L.sort()
+L.append('')
+for i in range(len(L)):
+    if L.count(L[i]) > 1:
+        if L[i] != L[i+1]:
+            print(L[i],'', end='')
+        else:
+            continue
+"""
+# *Option - Помещаю в новый список текущее число, если его там ещё нет И если в исходном списке таких чисел несколько
+"""
+a, b = [int(i) for i in input().split()], []
+for i in a:
+    if a.count(i) > 1 and b.count(i) == 0:
+        b.append(i)
+for i in b:
+    print(i, end=" ")
+"""
+# *Option - все просто )) - !+ set()
+"""
+ls = [int(i) for i in input().split()]
+for i in set(ls):
+    if ls.count(i) > 1:
+        print(i, end=' ')
+"""
+# *Option - мне кажется красивое решение и не должно быть очень ресурсоемким = +.sort
+"""
+a,b=[int(i) for i in input().split()],''
+a.sort()
+for i in range(len(a)-1):
+    if a[i]==a[i+1] and a[i]!=b:
+        print(a[i], end=' ')
+        b=a[i]
+"""
+# *Option - Ivan Trechyokas - Немного уличной магии. +.splot
+"""
+str = [int(i) for i in input().split()]
+ans = []
+[ans.append(x) for x in str if x not in ans and str.count(x) > 1]
+print(*ans)
+"""
 ##2.6 ЗАДАЧИ по материалам недели
+
 
 #3  Функции. Словари. Интерпретатор. Файлы. Модули.
 

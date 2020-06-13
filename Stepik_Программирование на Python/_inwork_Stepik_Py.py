@@ -967,9 +967,11 @@ print(modify_list([float(i) for i in input().split()]))
 ##3.2 Словари
 
 # ? Напишите функцию update_dictionary(d, key, value), которая принимает на вход словарь dd и два числа: keykey и valuevalue.
-def update_dictionary(d, key, value):
+
+"""
 #    for key in d: #пример перебора по ключу без использования специальной функции.. это возможно только для ключа, перебор по значению или паре ключь-значение возможен только по специальным функциям
 #    for key in d.keys(): #перебор по ключу через функцию
+def update_dictionary(d, key, value):
     if key in d:
         d[key] += [value]
     else:
@@ -977,10 +979,100 @@ def update_dictionary(d, key, value):
             d[2*key] += [value]
         else:
             d[2*key] = [value]
+"""
+# *Option - True -> 1 | False -> 0
+"""
+def update_dictionary(d, key, value):
+    key += key * (key not in d)
+    d[key] = d.get(key, []) + [value]
+"""
+# *Option - Чётко по инструкции
+"""
+def update_dictionary(d, key, value):
+    if key in d.keys():
+        d[key].append(value)
+    elif 2*key in d.keys():
+        d[2*key].append(value)
+    else:
+        d[2*key]=[value]
+"""
+# *Optoin - Просто и читаемо
+"""
+def update_dictionary(d, key, value):
+    if key not in d:
+        key = 2 * key
+    if key not in d:
+        d[key] = list()
+    d[key].append(value)
+"""
+# **Option - заменил ветку if на битовый сдвиг
+"""
+def update_dictionary(d, key, value):
+    key <<= key not in d
+    d.setdefault(key,[]).append(value)
+"""
+
+# ? Когда Антон прочитал «Войну и мир», ему стало интересно, сколько слов и в каком количестве используется в этой книге.
+# -> https://stepik.org/lesson/3373/step/6?unit=956
+# Помогите Антону написать упрощённую версию такой программы, которая сможет подсчитать слова, разделённые пробелом и вывести получившуюся статистику.
+# Программа должна считывать одну строку со стандартного ввода и выводить для каждого уникального слова в этой строке число его повторений (без учёта регистра) в формате "слово количество" (см. пример вывода).
+# Порядок вывода слов может быть произвольным, каждое уникальное слово﻿ должно выводиться только один раз.
+"""
+lst = [i for i in input().lower().split()]
+dct = {}
+for x in lst:
+    if x in dct:
+        dct[x] += 1
+    else:
+        dct[x] = 1
+for key, value in dct.items():
+    print(key, value)
+"""
+# *Option - @Ирина_Пронина Решение компактнее, чем через словарь, но если посмотреть на время выполнения, то уже на данных от 20-25 слов суммарно получается медленее выполнение. Из-за того, что вот так count считать всё время по большому массиву - очень невыгодно. http://take.ms/YeHE3﻿ - тут пример.
+# -> Хотя может не всё так однозначно, есть значения для которых сет быстрее
+"""
+lst = input().lower().split()
+#print(set(s))
+for i in set(s):
+    print(i, lst.count(i))
+"""
+# **Option - @Ирина_Автомонова,   красиво у вас получилось. Предлагаю вот так записать.
+"""
+s = input().lower().split()
+[print(i, s.count(i)) for i in set(s)]
+"""
+# ?
+# - T3 - СКИПАНУЛ здесь хакнул комент - Oleh Biletskyi 7 months ago Link ->
+# -> https://stepik.org/lesson/3373/step/7?unit=956
+"""
+dc={}
+n=int(input())
+for i in range(n):
+    x=int(input())
+    if x in dc:
+        print(dc[x])
+    else:
+        dc[x]=f(x)
+        print(dc[x])
+"""
+# + Для проверки времени исполнения кода:
+## Блин, это гениальное задание. Заставило задуматься о том, что более длинный код может выполняться быстрее, чем короткий. Т.е. нас подводят к оптимизации кода.
+"""
+import time
+start_time = time.clock()
+
+# Ваш код...
+
+print ("{:g} s".format(time.clock() - start_time))
+"""
 
 ##3.3 Интерпретатор: установка, запуск скрипта
 
 ##3.4 Файловый ввод/вывод
+
+# ? На прошлой неделе мы сжимали строки, используя кодирование повторов. Теперь нашей задачей будет восстановление исходной строки обратно.
+# -> https://stepik.org/lesson/3363/step/2?unit=1135
+
 
 ##3.5 Модули, подключение модулей
 

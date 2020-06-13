@@ -1073,9 +1073,146 @@ print ("{:g} s".format(time.clock() - start_time))
 # ? На прошлой неделе мы сжимали строки, используя кодирование повторов. Теперь нашей задачей будет восстановление исходной строки обратно.
 # -> https://stepik.org/lesson/3363/step/2?unit=1135
 
+# 1: Читаем строку из файла, с относительным путем без зависимости от OS
+"""
+import os
+with open(os.path.join('.', 'week_3_dataset', 'Т_3.4_1', 'dataset_3363_2 (2).txt')) as inf:
+    s1 = inf.readline()
 
+# 2: Декодируем строку
+number='0123456789'
+n = ''
+souf = ''
+for i in range(len(s1)-1, -1, -1):
+    if s1[i] in number:
+        n = s1[i]+n
+    else:
+        souf = s1[i]*int(n) + souf
+        n = ''
+"""
+# ? Недавно мы считали для каждого слова количество его вхождений в строку. Но на все слова может быть не так интересно смотреть, как, например, на наиболее часто используемые.
+# -> https://stepik.org/lesson/3363/step/3?unit=1135
+
+# 1: Читаем строку из файла, с относительным путем без зависимости от OS
+"""
+import os
+with open(os.path.join('.', 'week_3_dataset', 'T_3.4_2', 'dataset_3363_3 (2).txt')) as text:
+    s = sorted(text.read().replace('\n', ' ').lower().split())
+#    print (s)
+
+c1 = 0
+c = 0
+w = ''
+for v in s:
+    c = s.count(v)
+    if c > c1:
+        c1 = c
+        w = v
+print (w, c1)
+"""
+# ? Имеется файл с данными по успеваемости абитуриентов. Он представляет из себя набор строк, где в каждой строке записана следующая информация:
+# -> https://stepik.org/lesson/3363/step/4?unit=1135
+# Можно сделать более универсальным — количество оценок может быть любое:
+# ->
+"""
+import os
+with open(os.path.join('.', 'week_3_dataset', 'T_3.4_3', 'dataset_3363_4 (2).txt')) as dat:
+    for data in dat:
+        data = data.strip()
+#        print(line)
+
+data = """
+
+"""
+
+students = list()
+
+for line in data.split('\n'):
+    line = line.strip()
+    if not line:
+        continue
+
+    parts = line.split(';')
+    name = parts[0]
+    rating = list(map(int, parts[1:]))
+    mean = sum(rating) / len(rating)
+
+    students.append(
+        (name, rating, mean)
+    )
+
+for st in students:
+    print('{}: {:.2f}'.format(st[0], st[-1]))
+
+print()
+
+# Количество оценок определяем по количеству оценок последнего студента
+for i in range(len(rating)):
+    p = [s[1][i] for s in students]
+    print(sum(p) / len(p))
+"""
+# * 1: без оптимизанции
+data = """
+
+"""
+"""
+students = list()
+
+for line in data.split('\n'):
+    line = line.strip()
+    if not line:
+        continue
+
+    parts = line.split(';')
+    name = parts[0]
+
+    # Получаем список от второго элемента до последнего,
+    # и приводим каждый элемент к числу
+    rating = list(map(int, parts[1:]))
+    mean = sum(rating) / len(rating)
+
+    info = list()
+    info.append(name)
+    info.extend(rating)
+    info.append(mean)
+
+    students.append(info)
+
+# Выводим имя студента и его среднюю оценку по предметам (последний элемент)
+for st in students:
+#    print('{}: {:.2f}'.format(st[0], st[-1]))
+    print(st[-1])
+
+print()
+# По списку студентов составляет списки с оценками по каждому предмету
+p1 = [st[1] for st in students]
+p2 = [st[2] for st in students]
+p3 = [st[3] for st in students]
+
+print(sum(p1) / len(p1))
+print(sum(p2) / len(p2))
+print(sum(p3) / len(p3))
+"""
 ##3.5 Модули, подключение модулей
-
+# ? Напишите программу, которая подключает модуль math и, используя значение числа \piπ из этого модуля, находит для переданного ей на стандартный ввод радиуса круга периметр этого круга и выводит его на стандартный вывод.
+"""
+import math
+from math import pi
+r = float(input())
+print(2*pi*r)
+"""
+# ? Напишите программу, которая запускается из консоли и печатает значения всех переданных аргументов на экран (имя скрипта выводить не нужно). Не изменяйте порядок аргументов при выводе.
+"""
+import sys
+l = len(sys.argv)
+for i in range(1, l):
+    print(sys.argv[i])
+"""
+# Option - 2
+"""
+import sys
+print(*sys.argv[1:])
+"""
 ##3.6 Установка дополнительных модулей
 
 ##3.7 ЗАДАЧИ по материалам недели
